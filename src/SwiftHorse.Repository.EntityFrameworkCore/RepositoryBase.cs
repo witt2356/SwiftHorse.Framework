@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SwiftHorse.Repository.EntityFrameworkCore.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +24,6 @@ namespace SwiftHorse.Repository.EntityFrameworkCore
         protected TDbContext DbContext => _contextProvider.GetDbContext();
 
         protected DbSet<TEntity> Table => DbContext.Set<TEntity>();
-
     }
 
     public partial class RepositoryBase<TDbContext, TEntity>
@@ -45,14 +43,64 @@ namespace SwiftHorse.Repository.EntityFrameworkCore
 
     public partial class RepositoryBase<TDbContext, TEntity>
     {
-        public virtual async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        protected virtual void Attach(TEntity entity)
+        {
+            var entry = DbContext.ChangeTracker.Entries().FirstOrDefault(ee => ee.Entity == entity);
+            if (entry != null) { return; }
+
+            Table.Attach(entity);
+        }
+
+        public async Task UpdateAsync(TEntity entity)
+        {
+            Attach(entity);
+            DbContext.Entry(entity).State = EntityState.Modified;
+
+            await Task.Yield();
+        }
+
+        public async Task BulkUpdateAsync(IEnumerable<TEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                await UpdateAsync(entity);
+            }
+        }
+
+        public Task BulkUpdateAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>> sets)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public partial class RepositoryBase<TDbContext, TEntity>
+    {
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await Table.FirstOrDefaultAsync(predicate);
         }
 
-        public virtual async Task<IList<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IList<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await Table.Where(predicate).ToListAsync();
+        }
+
+        public async Task<T> FirstOrDefaultAsync<T>(string sql, object param)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<T>> QueryAsync<T>(string sql, object param)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public partial class RepositoryBase<TDbContext, TEntity>
+    {
+        public async Task ExecuteAsync(string sql, object param)
+        {
+            throw new NotImplementedException();
         }
     }
 }

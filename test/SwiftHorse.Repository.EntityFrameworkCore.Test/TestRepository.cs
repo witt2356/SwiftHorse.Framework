@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SwiftHorse.Repository.EntityFrameworkCore.Context;
 
 namespace SwiftHorse.Repository.EntityFrameworkCore.Test
 {

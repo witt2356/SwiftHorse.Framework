@@ -20,8 +20,8 @@
     /// Entity repository interface with pk
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="TPk"></typeparam>
-    public interface IRepository<TEntity, TPk> : IRepository<TEntity>
+    /// <typeparam name="TPKey"></typeparam>
+    public interface IRepository<TEntity, TPKey> : IRepository<TEntity>
     {
     }
 }

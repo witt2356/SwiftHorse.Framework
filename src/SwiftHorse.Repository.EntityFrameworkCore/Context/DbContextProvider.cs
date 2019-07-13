@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace SwiftHorse.Repository.EntityFrameworkCore.Context
+namespace SwiftHorse.Repository.EntityFrameworkCore
 {
     internal class DbContextProvider<TDbContext> : IDbContextProvider<TDbContext> where TDbContext : DbContext
     {

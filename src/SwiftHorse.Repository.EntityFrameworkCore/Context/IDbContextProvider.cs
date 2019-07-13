@@ -1,4 +1,4 @@
-﻿namespace SwiftHorse.Repository.EntityFrameworkCore.Context
+﻿namespace SwiftHorse.Repository.EntityFrameworkCore
 {
     /// <summary>
     /// 

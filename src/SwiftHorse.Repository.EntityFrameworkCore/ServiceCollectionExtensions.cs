@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SwiftHorse.Repository.EntityFrameworkCore.Context;
 using System;
 
 namespace SwiftHorse.Repository.EntityFrameworkCore

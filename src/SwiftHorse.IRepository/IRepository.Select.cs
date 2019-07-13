@@ -20,5 +20,23 @@ namespace SwiftHorse
         /// <param name="predicate"></param>
         /// <returns></returns>
         Task<IList<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        Task<T> FirstOrDefaultAsync<T>(string sql, object param);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        Task<IEnumerable<T>> QueryAsync<T>(string sql, object param);
     }
 }
